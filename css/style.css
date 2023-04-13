@@ -15,6 +15,7 @@ body{
     border: solid 1px rgba(200, 202, 203, 0.9);
     background-color:  #E5E5E5;
     margin: 20px auto;
+    margin-top: 80px;
    
     justify-content:flex-start;
     flex-direction: column;
@@ -27,15 +28,18 @@ body{
     height: 80px;
     background-color: #FFF;
     position: relative;
-   
+    position: fixed;
+    top: 0;
+    left: auto;
     margin: 0px auto;
-    margin-bottom: 15px;
+    margin-bottom: 0px;
     box-shadow: 0px 1px 1px 0px rgb(212, 211, 211);
     border-radius: 5px;
 
     display:flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 10;
     
 
 }
@@ -43,6 +47,7 @@ body{
     width: 75px;
     height:75px;
     margin-left: 10px;
+    
     
 }
 .home .icon{
@@ -59,26 +64,39 @@ body{
     align-items: flex-start;
 }
 .estilo{
-   width: 375px;
+    width: 375px;
     height: 40px;
     background-color: #FFF;
     margin-top:5px;
+    
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+    
 }
 
-
+/*.estilo li {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+}*/
 .footer{
     min-width:375px;
     height: 80px;
     background-color: #FFF;
     position: absolute;
-    bottom: 0px;
-    left: 0px;
+    position: fixed;
+    bottom:0;
+    right: auto;
     box-shadow: 0px 1px 1px 0px rgb(212, 211, 211);
     border-radius: 5px;
     margin: 0px auto;
     display:flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 9;
 }
 
 
