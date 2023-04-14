@@ -1,9 +1,36 @@
 axios.defaults.headers.common['Authorization'] = 'iPZD20Gl3D27ZLzrmsNtZOMX';
+//Enviar nome e verificar se é valido------------------------------------------------------
+let nome={
+};
+function existName(erroName){
+    if(erroName.status === 200){
+        console.log('ok');
+    }
+}
 
+
+function existNameError(erroName){
+    if(erroName.response.status === 400){
+        sendName();
+    }
+}
+
+
+function sendName(){
+    
+    nome = {
+      name:prompt('Digite um nome válido!')
+    };
+    promise = axios.post('https://mock-api.driven.com.br/api/vm/uol/participants', nome);
+    promise.then(existName);
+    promise.catch(existNameError)
+}
 let searchArray = {
 
 };
+sendName();
 
+//FIM---------------------------------------------------------------------------------------
 let boxMesage ='';
 
 function mesageOnPage(array){
@@ -62,5 +89,5 @@ function searchMesageFromServer(){
    ;    
 }
 searchMesageFromServer();
-setInterval(searchMesageFromServer,5000);
+setInterval(searchMesageFromServer,3000);
 
