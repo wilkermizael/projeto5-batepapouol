@@ -3,17 +3,21 @@ axios.defaults.headers.common['Authorization'] = 'iPZD20Gl3D27ZLzrmsNtZOMX';
 let nome={
 };
 let nameUsuario ='';
+let verificaNome ={};
+let existe;
 function existName(resposta){
-    if(resposta.status === 200){
-        //console.log('deu certo');
+        if (resposta.status === 200){
+    
+        searchMesageFromServer()
+        setInterval(searchMesageFromServer,3000);
+        
     }
 }
 
 function existNameError(resposta){
     let statusCode = resposta.response.status;
     if( statusCode === 400){
-        console.log('erro400');
-        sendName();
+        window.location.reload();
     }else if( statusCode ===200){
         //console.log("Tudo certo");
     }
@@ -25,7 +29,7 @@ function sendName(){
     nome = {
       name: nameUsuario
     };
-    const promise = axios.post('https://mock-api.driven.com.br/api/vm/uol/participants', nome);
+    const promise = axios.post('https://mock-api.driven.com.br/api/vm/uol/participants',nome);
     promise.then(existName);
     promise.catch(existNameError);
 }
@@ -67,7 +71,7 @@ function sendMessage(resposta){
 
 function sendMesageErro(resposta){
     console.log(resposta);
-    window.location.reload();
+    
 }
 
 let messageInput = '';
@@ -95,12 +99,13 @@ let boxMesage ='';
 let messageArray = '';
 function mesageOnPage(resposta){
     messageArray = resposta.data;
+
     boxMesage = document.querySelector('ul');
     boxMesage.innerHTML ='';
     for( let i = 0; i < messageArray.length; i++){
             
             boxMesage.innerHTML +=`
-            <div class=" estilo">
+            <div data-test="message" class=" estilo">
                 <li>
                     <div> ${messageArray[i].time}</div>
                 </li>
@@ -126,10 +131,10 @@ function mesageOnPage(resposta){
 
 // Trazendo as mensagens do servidor para  a tela do Usuário
 function searchMesageFromServer(){
-    const promise = axios.get(' https://mock-api.driven.com.br/api/vm/uol/messages');
+    let promise = {};
+    promise = axios.get(' https://mock-api.driven.com.br/api/vm/uol/messages');
     promise.then(mesageOnPage);
     //promise.catch(mesageOnPageErro);        
 }
-searchMesageFromServer();
-setInterval(searchMesageFromServer,3000);
+
 
