@@ -2,91 +2,133 @@ axios.defaults.headers.common['Authorization'] = 'iPZD20Gl3D27ZLzrmsNtZOMX';
 //Enviar nome e verificar se é valido------------------------------------------------------
 let nome={
 };
-function existName(erroName){
-    if(erroName.status === 200){
-        console.log('ok');
+let nameUsuario ='';
+function existName(resposta){
+    if(resposta.status === 200){
+        //console.log('deu certo');
     }
 }
 
-
-function existNameError(erroName){
-    if(erroName.response.status === 400){
+function existNameError(resposta){
+    let statusCode = resposta.response.status;
+    if( statusCode === 400){
+        console.log('erro400');
         sendName();
+    }else if( statusCode ===200){
+        //console.log("Tudo certo");
     }
 }
-
 
 function sendName(){
-    
+    nameUsuario = prompt('Digite um nome válido');
+    /*nameUsuario = nameUsuario;*/
     nome = {
-      name:prompt('Digite um nome válido!')
+      name: nameUsuario
     };
-    promise = axios.post('https://mock-api.driven.com.br/api/vm/uol/participants', nome);
+    const promise = axios.post('https://mock-api.driven.com.br/api/vm/uol/participants', nome);
     promise.then(existName);
-    promise.catch(existNameError)
+    promise.catch(existNameError);
 }
 let searchArray = {
-
-};
-sendName();
-
-//FIM---------------------------------------------------------------------------------------
-let boxMesage ='';
-
-function mesageOnPage(array){
     
+};
+sendName()
+
+//ENVIANDO STATUS DE ONLINE PARA O SERVIDOR---------------------------------------------------------------------------------------
+
+function statusOnline (){
+    
+    const promise = axios.post('https://mock-api.driven.com.br/api/vm/uol/status', nome);
+    promise.then(statusOk);
+    promise.catch(statusErro);
+}
+
+function statusOk(resposta){
+    if(resposta.data === 'OK'){
+    console.log('Deu muito Bom')};
+}
+
+function statusErro(resposta){
+    if(resposta.response.data === 400){
+    console.log('Status erro');}
+}
+setInterval(statusOnline, 5000);
+
+//Enviando Mensagens para o chat-----------------------------------------------------------------------------------------------------
+
+function sendMessage(resposta){
+    
+    if(resposta.status === 200){
+        console.log("Mensagem enviada ao servidor");
+        document.querySelector('Form').reset();
+    }
+    
+}
+
+function sendMesageErro(resposta){
+    console.log(resposta);
+    window.location.reload();
+}
+
+let messageInput = '';
+let messageToServer = {};
+function messageFromInput(){
+    
+    messageInput = document.querySelector('input').value;
+    // Enviar para o servidor
+    messageToServer ={
+        from: nome.name,
+        to: "Todos",
+        text: messageInput,
+        type: "message"
+    }
+    const promise =axios.post('https://mock-api.driven.com.br/api/vm/uol/messages',messageToServer);
+    promise.then(sendMessage);
+    promise.catch(sendMesageErro);
+    
+
+    // Buscar mensagens atualizadas
+    
+}
+//-----------------------------------------------------------------------------------------------------------------------------------
+let boxMesage ='';
+let messageArray = '';
+function mesageOnPage(resposta){
+    messageArray = resposta.data;
     boxMesage = document.querySelector('ul');
     boxMesage.innerHTML ='';
-    for( let i = 0; i < array.length; i++){
-        if( array[i].status === "status"){
+    for( let i = 0; i < messageArray.length; i++){
             
             boxMesage.innerHTML +=`
             <div class=" estilo">
                 <li>
-                    <div> ${array[i].time}</div>
+                    <div> ${messageArray[i].time}</div>
                 </li>
                 
                 <li>
-                    <div> ${array[i].from}</div>
+                    <div> ${messageArray[i].from}</div>
                 </li>
 
                 <li>
-                    <div> Para: ${array[i].text}</div>
+                    <div>para: ${messageArray[i].to}</div>
+                </li>
+
+                <li>
+                    <div> ${messageArray[i].text}</div>
                 </li>
 
             </div>`
-        }else{
-
-        boxMesage.innerHTML +=`
-            <div class=" estilo">
-                <li>
-                    <div> ${array[i].time}</div>
-                </li>
-                
-                <li>
-                    <div> ${array[i].from}</div>
-                </li>
-
-                <li>
-                    <div> Para: ${array[i].to}</div>
-                </li>
-                
-                <li>
-                    <div> ${array[i].text}</div>
-                </li>
-
-            </div>`};
+        
     }
-    //boxMesage.scrollTop = boxMesage.scrollHeight;
-   
 }
+  
+   
 
+// Trazendo as mensagens do servidor para  a tela do Usuário
 function searchMesageFromServer(){
-    axios.get(' https://mock-api.driven.com.br/api/vm/uol/messages').then( function (response){
-        searchArray = response.data;
-        mesageOnPage(searchArray);
-    });
-   ;    
+    const promise = axios.get(' https://mock-api.driven.com.br/api/vm/uol/messages');
+    promise.then(mesageOnPage);
+    //promise.catch(mesageOnPageErro);        
 }
 searchMesageFromServer();
 setInterval(searchMesageFromServer,3000);

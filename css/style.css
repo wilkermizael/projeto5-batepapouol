@@ -58,30 +58,42 @@ body{
 }
 .feed{
     width: 100%;
-    height: auto;
+    
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    
 }
 .estilo{
     width: 375px;
     height: 40px;
     background-color: #FFF;
     margin-top:5px;
+    box-sizing: content-box;
     
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
+    flex-wrap: wrap;
     align-items: center;
+
+    background-color: red;
+    
+   
+    
     
     
 }
 
-/*.estilo li {
+.estilo li {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    position: relative;
+    margin-right: 15px;
     
-}*/
+    
+}
+
 .footer{
     min-width:375px;
     height: 80px;
@@ -128,4 +140,15 @@ input{
     font-style: italic;
     font-family: 'Roboto';
 
+}
+
+.time {
+    width: 65px;
+    background-color: red;
+    position: absolute;
+    left: 0px;
+}
+.from{
+    width: 200px;
+    background-color: blueviolet;
 }
