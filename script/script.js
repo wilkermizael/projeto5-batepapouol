@@ -25,7 +25,7 @@ function existNameError(resposta){
 
 function sendName(){
     nameUsuario = prompt('Digite um nome válido');
-    /*nameUsuario = nameUsuario;*/
+    nameUsuario = nameUsuario;
     nome = {
       name: nameUsuario
     };
@@ -103,7 +103,43 @@ function mesageOnPage(resposta){
     boxMesage = document.querySelector('ul');
     boxMesage.innerHTML ='';
     for( let i = 0; i < messageArray.length; i++){
-            
+            if(messageArray[i].text === 'entra na sala...' ||messageArray[i].text === 'sai da sala...' ){
+                boxMesage.innerHTML +=`
+                <div data-test="message" class=" estilo gray">
+                    <li>
+                        <div> ${messageArray[i].time}</div>
+                    </li>
+                    
+                    <li>
+                        <div> ${messageArray[i].from}</div>
+                    </li>
+    
+                    <li>
+                        <div> ${messageArray[i].text}</div>
+                    </li>
+    
+                </div>`
+
+            }else if(messageArray[i].type ==='private_message'){
+                boxMesage.innerHTML +=`
+            <div data-test="message" class=" estilo pink">
+                <li>
+                    <div> ${messageArray[i].time}</div>
+                </li>
+                
+                <li>
+                    <div> ${messageArray[i].from}</div>
+                </li>
+
+                <li>
+                    <div> reservadamente para: ${messageArray[i].to}</div>
+                </li>
+
+                <li>
+                    <div> ${messageArray[i].text}</div>
+                </li>
+
+            </div>`}else{
             boxMesage.innerHTML +=`
             <div data-test="message" class=" estilo">
                 <li>
@@ -122,7 +158,7 @@ function mesageOnPage(resposta){
                     <div> ${messageArray[i].text}</div>
                 </li>
 
-            </div>`
+            </div>`}
         
     }
 }
