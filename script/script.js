@@ -94,7 +94,20 @@ function messageFromInput(){
     // Buscar mensagens atualizadas
     
 }
-//-----------------------------------------------------------------------------------------------------------------------------------
+//ENVIANDO MENSAGEM COM ENTER-----------------------------------------------------------------------------------------------------------------------------------
+let input = document.querySelector('.input-click');
+
+input.addEventListener('keypress',function(event){
+    if(event.key === 'Enter'){
+        event.preventDefault();
+        document.querySelector('.icon').click;
+        messageFromInput();
+    }
+});
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 let boxMesage ='';
 let messageArray = '';
 function mesageOnPage(resposta){
@@ -130,15 +143,12 @@ function mesageOnPage(resposta){
                 <li>
                     <div> ${messageArray[i].from}</div>
                 </li>
-
                 <li>
                     <div> reservadamente para: ${messageArray[i].to}</div>
                 </li>
-
                 <li>
                     <div> ${messageArray[i].text}</div>
                 </li>
-
             </div>`}else{
             boxMesage.innerHTML +=`
             <div data-test="message" class=" estilo">
@@ -149,15 +159,12 @@ function mesageOnPage(resposta){
                 <li>
                     <div> ${messageArray[i].from}</div>
                 </li>
-
                 <li>
                     <div>para: ${messageArray[i].to}</div>
                 </li>
-
                 <li>
                     <div> ${messageArray[i].text}</div>
                 </li>
-
             </div>`}
         
     }
@@ -172,15 +179,4 @@ function searchMesageFromServer(){
     //promise.catch(mesageOnPageErro);        
 }
 // Enviando mensagem com o Enter
-
-const input = document.querySelector('.input-click');
-
-input.addEventListener('keypress', function(event){
-    if(event.key === 'Enter'){
-        event.preventDefault();
-        document.querySelector('icon').click;
-        messageFromInput();
-    }
-})
-
 
