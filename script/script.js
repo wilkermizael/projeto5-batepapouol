@@ -162,8 +162,7 @@ function mesageOnPage(resposta){
         
     }
 }
-  
-   
+
 
 // Trazendo as mensagens do servidor para  a tela do Usuário
 function searchMesageFromServer(){
@@ -172,5 +171,16 @@ function searchMesageFromServer(){
     promise.then(mesageOnPage);
     //promise.catch(mesageOnPageErro);        
 }
+// Enviando mensagem com o Enter
+
+const input = document.querySelector('.input-click');
+
+input.addEventListener('keypress', function(event){
+    if(event.key === 'Enter'){
+        event.preventDefault();
+        document.querySelector('icon').click;
+        messageFromInput();
+    }
+})
 
 
